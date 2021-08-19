@@ -4,6 +4,8 @@ require_once("../include/users.php");
 require_once("../include/html_functions.php");
 require_once("../include/functions.php");
 
+$pattern = ' ^.*(?=.{7,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$ ';
+
 session_start();
 
 $error = False;
@@ -11,6 +13,11 @@ if (isset($_POST['firstname']) && isset($_POST['username']) && isset($_POST['pas
     && $_POST['username'] && $_POST['password'] && $_POST['againpass'] && $_POST['firstname'] && $_POST['lastname'])
 {
    if ($_POST['password'] != $_POST['againpass'])
+   {
+      $flash['error'] = "The passwords do not match. Try again";
+      $error = True;
+   }
+   else if (preg_match($pattern, $_POST['password'])
    {
       $flash['error'] = "The passwords do not match. Try again";
       $error = True;
